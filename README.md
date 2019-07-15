@@ -27,3 +27,5 @@ This is an H2
 *빨강
   *녹색
     *파랑
+
+![Alt text](C:\Users\njg71\Desktop\Git\STM32_Study\stm32f103c8t6_pinout_voltage01.png)
