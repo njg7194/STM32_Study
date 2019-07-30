@@ -71,7 +71,21 @@ static void MX_I2C2_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+#ifdef __GNUC__
+int _write(int file, uint8_t* ptr, int len)
+{
+	HAL_UART_Transmit(&huart,ptr,len,1000);
+	return len;
+}
+#elif(__ICCARM__||__CC_ARM)
+int fputc(int c,FILE* stream)
+{
+	HAL_UART_Transmit(&huart1,(uint8_t*)&c,1,1000);
+	return c;
+}
+#endif
 
+int TestCount =0;
 /* USER CODE END 0 */
 
 /**
@@ -108,7 +122,7 @@ int main(void)
   MX_I2C1_Init();
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
-
+  printf("USART_printf Test\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -119,9 +133,10 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	  HAL_GPIO_TogglePin(LED_PC13_GPIO_Port, LED_PC13_Pin);
-	  HAL_Delay(15);
-    HAL_Delay(15);
+	  printf("USART_Main Run Test! = %d \r\n", TestCount);
+
+	  TestCount++;
+
 
   }
   /* USER CODE END 3 */
